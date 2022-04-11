@@ -1,0 +1,88 @@
+//register
+POST localhost:9999/user/register
+Content-Type: application/json
+
+{
+  "first_name": "angel",
+  "last_name": "todorov",
+  "username": "angeltodorov1",
+  "password": "aAa1!@345lgfl;dflg",
+  "confirmPassword": "aAa1!@345lgfl;dflg",
+  "phone": "0892236588",
+  "is_admin": "1",
+  "email": "angel123@abv.bg"
+
+}
+###
+
+PUT localhost:9999/registraciq
+Content-Type: application/json
+
+{
+"username": "AngelAngel",
+"password": "Aa1234!@",
+"password2": "Aa1234!@"
+
+}
+
+###
+
+GET localhost:9999/spring-mvc-xml/invalidUrl
+Content-Type: application/json
+
+{
+
+}
+
+###
+GET localhost:9999/users/1
+
+###
+PUT localhost:9999/edit/user
+Content-Type: application/json
+
+{
+      "id": 2,
+   "firstName": "angel",
+   "lastName": "todorov",
+   "username": "angeltodorov1",
+    "profileImgUrl": " ",
+    "email": "changedmail@abv.bg "
+
+
+
+
+}
+####
+GET localhost:9999/auth
+Content-Type: application/json
+
+{
+  "username": "angeltodorov",
+  "password": "Aa1234!@"
+
+}
+####
+PUT localhost:9999/newArticle
+Content-type:application/json
+
+{
+  "headline": "sdfs",
+  "content":  "sdfsdf"
+
+
+
+}
+#### get article by id
+GET localhost:9999/article1
+Content-type:application/json
+
+###
+GET localhost:9999/articles/all
+
+
+### like article
+PUT localhost:9999/articles/{id}/like
+Content-type:application/json
+
+
