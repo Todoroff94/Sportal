@@ -1,4 +1,4 @@
-package com.example.sportalproject.model.repository;
+package com.example.sportalproject.repository;
 
 import com.example.sportalproject.model.entity.Picture;
 import org.springframework.data.jpa.repository.JpaRepository;

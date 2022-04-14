@@ -7,10 +7,10 @@ import com.example.sportalproject.model.DTO.articleDTOs.ArticleAddDTO;
 import com.example.sportalproject.model.DTO.articleDTOs.ArticleResponseDTO;
 import com.example.sportalproject.model.DTO.articleDTOs.ArticleWithoutOwnerDTO;
 import com.example.sportalproject.model.entity.*;
-import com.example.sportalproject.model.repository.ArticleRepository;
-import com.example.sportalproject.model.repository.PictureRepository;
-import com.example.sportalproject.model.repository.UserRepository;
-import com.example.sportalproject.model.repository.VideoRepository;
+import com.example.sportalproject.repository.ArticleRepository;
+import com.example.sportalproject.repository.PictureRepository;
+import com.example.sportalproject.repository.UserRepository;
+import com.example.sportalproject.repository.VideoRepository;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
@@ -27,22 +27,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.example.sportalproject.controller.BaseController.validateSession;
+import static com.example.sportalproject.controller.SessionValidator.validateSession;
 
 @Service
 public class ArticleService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    ArticleRepository articleRepository;
+    private ArticleRepository articleRepository;
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
     @Autowired
-    VideoRepository videoRepository;
+    private VideoRepository videoRepository;
     @Autowired
-    PictureRepository pictureRepository;
+    private PictureRepository pictureRepository;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
 
     public User getUserById(long id) {

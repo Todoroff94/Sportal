@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@RestController
-public abstract class BaseController {
+
+public abstract class SessionValidator {
 
     public static final String LOGGED = "logged";
     public static final String LOGGED_FROM = "logged_from";

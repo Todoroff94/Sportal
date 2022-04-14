@@ -6,7 +6,7 @@ import com.example.sportalproject.exceptions.UnauthorisedException;
 import com.example.sportalproject.model.DTO.categoryDTOs.CategoryAddDTO;
 import com.example.sportalproject.model.entity.Category;
 import com.example.sportalproject.model.entity.User;
-import com.example.sportalproject.model.repository.CategoryRepository;
+import com.example.sportalproject.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +19,9 @@ import java.util.Optional;
 public class CategoryService {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     @Transactional
     public Category addCategory(User admin, CategoryAddDTO categoryDTO) {

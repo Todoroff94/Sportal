@@ -6,6 +6,7 @@ import com.example.sportalproject.model.DTO.*;
 import com.example.sportalproject.model.DTO.userDTOs.*;
 import com.example.sportalproject.model.entity.User;
 import com.example.sportalproject.service.UserService;
+import com.mysql.cj.Session;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,13 @@ import javax.servlet.http.HttpSession;
 
 
 @RestController
-public class UserController extends BaseController {
+public class UserController  {
 
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
 
     @PostMapping("/user/register")
@@ -48,7 +49,7 @@ public class UserController extends BaseController {
     @PutMapping("/edit/user")
     public ResponseEntity<UserEditResponseDTO> edit(@RequestBody UserEditRequestDTO user, HttpSession session, HttpServletRequest request) {
 
-        validateSession(session, request);
+        SessionValidator.validateSession(session, request);
         User u = userService.getById(user.getId());
         u = userService.edit(user);
         UserEditResponseDTO dto = modelMapper.map(u, UserEditResponseDTO.class);
@@ -62,8 +63,8 @@ public class UserController extends BaseController {
 
         String password = user.getPassword();
         UserResponseDTO u = userService.login(username, password);
-        session.setAttribute(USER_ID, u.getId());
-        session.setAttribute(LOGGED, true);
+        session.setAttribute(SessionValidator.USER_ID, u.getId());
+        session.setAttribute(SessionValidator.LOGGED, true);
         session.setAttribute("logged_from", request.getRemoteAddr());
 
         return ResponseEntity.ok(u);
@@ -71,7 +72,7 @@ public class UserController extends BaseController {
 
     @PutMapping("/changePassword")
     public ResponseEntity<UserResponsePassDTO> changePassword(@RequestBody UserChangePasswordDTO user, HttpSession session, HttpServletRequest request) {
-        validateSession(session, request);
+        SessionValidator.validateSession(session, request);
         User u = userService.getById(user.getId());
 
         if (userService.checkOldPassword(user)) {
@@ -87,13 +88,13 @@ public class UserController extends BaseController {
     public ResponseEntity<UserResponseDTO> logout( HttpSession session) {
 
 
-        if(session.getAttribute(BaseController.USER_ID) == null){
+        if(session.getAttribute(SessionValidator.USER_ID) == null){
             throw new BadRequestException("You are already logged out!");
         }
-        User u=userService.getById((long) session.getAttribute(BaseController.USER_ID));
+        User u=userService.getById((long) session.getAttribute(SessionValidator.USER_ID));
 
-        if ((boolean) session.getAttribute(LOGGED)) {
-            session.setAttribute(BaseController.LOGGED_OUT, u);
+        if ((boolean) session.getAttribute(SessionValidator.LOGGED)) {
+            session.setAttribute(SessionValidator.LOGGED_OUT, u);
             UserResponseDTO dto = modelMapper.map(u, UserResponseDTO.class);
             dto.setMessage("You logged out!");
             session.invalidate();
@@ -109,8 +110,8 @@ public class UserController extends BaseController {
     @DeleteMapping("/deleteUser{id}")
     public MessageDTO deleteUser(@PathVariable long id, HttpServletRequest request, HttpSession session) {
 
-        validateSession(session, request);
-        User u = userService.getById((long) session.getAttribute(BaseController.USER_ID));
+        SessionValidator.validateSession(session, request);
+        User u = userService.getById((long) session.getAttribute(SessionValidator.USER_ID));
         if (!u.is_admin()) {
             throw new UnauthorisedException("You are not authorised for this operation!");
         }
@@ -123,7 +124,7 @@ public class UserController extends BaseController {
 
     @PostMapping("/uploadProfileImage")
     public String uploadProfileImage(@RequestParam(name = "file") MultipartFile file, HttpServletRequest request) {
-        User u = userService.getById((long) request.getSession().getAttribute(BaseController.USER_ID));
+        User u = userService.getById((long) request.getSession().getAttribute(SessionValidator.USER_ID));
         return userService.uploadProfilePicture(file, request, u);
     }
 }

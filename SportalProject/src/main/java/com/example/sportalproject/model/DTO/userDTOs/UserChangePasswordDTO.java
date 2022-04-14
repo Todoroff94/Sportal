@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserChangePasswordDTO {
 
-    long id;
-    String oldPassword;
-    String newPassword;
-    String newConfPassword;
+    private long id;
+    private String oldPassword;
+    private String newPassword;
+    private String newConfPassword;
 }

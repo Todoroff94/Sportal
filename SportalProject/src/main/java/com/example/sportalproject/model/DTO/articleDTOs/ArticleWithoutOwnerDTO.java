@@ -17,6 +17,6 @@ public class ArticleWithoutOwnerDTO {
     private long id;
     private String headline;
     private String content;
-    CategoryIdDTO category;
+    private CategoryIdDTO category;
 
 }

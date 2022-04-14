@@ -6,8 +6,8 @@ import com.example.sportalproject.exceptions.UnauthorisedException;
 import com.example.sportalproject.model.DTO.userDTOs.*;
 import com.example.sportalproject.model.entity.Picture;
 import com.example.sportalproject.model.entity.User;
-import com.example.sportalproject.model.repository.PictureRepository;
-import com.example.sportalproject.model.repository.UserRepository;
+import com.example.sportalproject.repository.PictureRepository;
+import com.example.sportalproject.repository.UserRepository;
 import com.example.sportalproject.util.Validator;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FilenameUtils;
@@ -24,19 +24,19 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static com.example.sportalproject.controller.BaseController.validateSession;
+import static com.example.sportalproject.controller.SessionValidator.validateSession;
 
 @Service
 public class UserService {
-    @Autowired
-    UserRepository userRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    private UserRepository userRepository;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private ModelMapper modelMapper;
     @Autowired
-    PictureRepository pictureRepository;
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PictureRepository pictureRepository;
 
     @Transactional
     public UserRegisterResponseDTO registerUser(UserRegisterRequestDTO userDTO) {
@@ -84,11 +84,7 @@ public class UserService {
         Optional<User> opt = userRepository.findById(user.getId());
         if (opt.isPresent()) {
             User u = modelMapper.map(opt, User.class);
-          //  user.setFirstName(Validator.validateEmptyField(user.getFirstName(),"First name"));
-          //  u.setFirstName(user.getFirstName());
             u.setFirstName(Validator.validateEmptyField(user.getFirstName(),"First name"));
-         //   u.setFirstName(user.getFirstName());
-
             user.setLastName(Validator.validateEmptyField(user.getLastName(),"Last name"));
             u.setLastName(user.getLastName());
             Validator.validateEmail(user.getEmail());

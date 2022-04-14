@@ -4,8 +4,8 @@ import com.example.sportalproject.model.DTO.articleDTOs.ArticleResponseDTO;
 import com.example.sportalproject.model.DTO.articleDTOs.ArticleWithoutOwnerDTO;
 import com.example.sportalproject.model.entity.Article;
 import com.example.sportalproject.model.entity.User;
-import com.example.sportalproject.model.repository.ArticleRepository;
-import com.example.sportalproject.model.repository.UserRepository;
+import com.example.sportalproject.repository.ArticleRepository;
+import com.example.sportalproject.repository.UserRepository;
 import com.example.sportalproject.service.ArticleService;
 import com.example.sportalproject.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -19,25 +19,23 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-public class ArticleController extends BaseController {
+public class ArticleController  {
 
     @Autowired
-    ArticleService articleService;
+    private ArticleService articleService;
+
     @Autowired
-    UserRepository userRepository;
+    private ModelMapper modelMapper;
+
     @Autowired
-    ModelMapper modelMapper;
-    @Autowired
-    ArticleRepository articleRepository;
-    @Autowired
-    UserService userService;
+    private UserService userService;
 
 
     @PostMapping("/newArticle")
     public ResponseEntity<ArticleWithoutOwnerDTO> createArticle(@RequestBody ArticleAddDTO article, HttpSession session, HttpServletRequest request) {
 
-        validateSession(session, request);
-        User u = userService.getById((long) session.getAttribute(BaseController.USER_ID));
+        SessionValidator.validateSession(session, request);
+        User u = userService.getById((long) session.getAttribute(SessionValidator.USER_ID));
         ArticleWithoutOwnerDTO art = articleService.create(article, u);
         return ResponseEntity.ok(art);
     }
@@ -77,8 +75,8 @@ public class ArticleController extends BaseController {
     public ResponseEntity<ArticleResponseDTO> likeArticle(@PathVariable long id, HttpSession session, HttpServletRequest request) {
 
         Article article = articleService.getById(id);
-        validateSession(session, request);
-        User u = articleService.getUserById(((long) session.getAttribute(BaseController.USER_ID)));
+        SessionValidator.validateSession(session, request);
+        User u = articleService.getUserById(((long) session.getAttribute(SessionValidator.USER_ID)));
         ArticleResponseDTO dto = articleService.likeArticle(u, article);
 
         return ResponseEntity.ok(dto);
@@ -88,8 +86,8 @@ public class ArticleController extends BaseController {
     public ResponseEntity<ArticleResponseDTO> unlikeArticle(@PathVariable long id, HttpSession session, HttpServletRequest request) {
 
         Article article = articleService.getById(id);
-        validateSession(session, request);
-        User u = articleService.getUserById(((long) session.getAttribute(BaseController.USER_ID)));
+        SessionValidator.validateSession(session, request);
+        User u = articleService.getUserById(((long) session.getAttribute(SessionValidator.USER_ID)));
         ArticleResponseDTO dto = articleService.unlikeArticle(u, article);
 
         return ResponseEntity.ok(dto);
@@ -99,8 +97,8 @@ public class ArticleController extends BaseController {
     public ResponseEntity<ArticleResponseDTO> dislikeArticle(@PathVariable long id, HttpSession session, HttpServletRequest request) {
 
         Article article = articleService.getById(id);
-        validateSession(session, request);
-        User u = articleService.getUserById(((long) session.getAttribute(BaseController.USER_ID)));
+        SessionValidator.validateSession(session, request);
+        User u = articleService.getUserById(((long) session.getAttribute(SessionValidator.USER_ID)));
         ArticleResponseDTO dto = articleService.dislikeArticle(u, article);
 
         return ResponseEntity.ok(dto);

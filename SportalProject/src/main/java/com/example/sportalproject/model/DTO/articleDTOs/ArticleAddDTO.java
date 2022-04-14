@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
 public class ArticleAddDTO {
 
 
-    String headline;
-    String content;
-    CategoryIdDTO category;
+    private String headline;
+    private String content;
+    private CategoryIdDTO category;
 }
 
 

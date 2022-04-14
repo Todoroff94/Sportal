@@ -18,14 +18,14 @@ public class CategoryController {
 
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @PutMapping("/addCategory")
     public Category addCategory(@RequestBody CategoryAddDTO categoryDTO, HttpSession session, HttpServletRequest request) {
-        BaseController.validateSession(session, request);
-        User admin = userService.getById((long) session.getAttribute(BaseController.USER_ID));
+        SessionValidator.validateSession(session, request);
+        User admin = userService.getById((long) session.getAttribute(SessionValidator.USER_ID));
 
         return categoryService.addCategory(admin, categoryDTO);
     }
@@ -37,7 +37,7 @@ public class CategoryController {
 
     @DeleteMapping("/deleteCategory{id}")
     public void deleteCategory(@PathVariable long id, HttpSession session) {
-        User u = userService.getById((Long) session.getAttribute(BaseController.USER_ID));
+        User u = userService.getById((Long) session.getAttribute(SessionValidator.USER_ID));
         if (!u.is_admin()) {
             throw new UnauthorisedException("You are not authorised for this operation.");
         }

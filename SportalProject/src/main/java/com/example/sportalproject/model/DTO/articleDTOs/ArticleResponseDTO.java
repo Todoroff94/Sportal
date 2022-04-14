@@ -19,9 +19,9 @@ public class ArticleResponseDTO {
     private long id;
     private String headline;
     private String content;
-    CategoryNameDTO category;
+    private CategoryNameDTO category;
     private int article_views;
-    UserWithoutArticlesDTO author;
+    private UserWithoutArticlesDTO author;
 
 
 

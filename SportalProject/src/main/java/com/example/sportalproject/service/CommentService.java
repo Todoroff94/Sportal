@@ -8,9 +8,9 @@ import com.example.sportalproject.model.DTO.commentDTOs.*;
 import com.example.sportalproject.model.entity.Article;
 import com.example.sportalproject.model.entity.Comment;
 import com.example.sportalproject.model.entity.User;
-import com.example.sportalproject.model.repository.ArticleRepository;
-import com.example.sportalproject.model.repository.CommentRepository;
-import com.example.sportalproject.model.repository.UserRepository;
+import com.example.sportalproject.repository.ArticleRepository;
+import com.example.sportalproject.repository.CommentRepository;
+import com.example.sportalproject.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,15 +24,11 @@ import java.util.List;
 public class CommentService {
 
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
     @Autowired
-    ArticleService articleService;
+    private ModelMapper modelMapper;
     @Autowired
-    ModelMapper modelMapper;
-    @Autowired
-    ArticleRepository articleRepository;
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Transactional
     public CommentWithoutArticleDTO createParentComment(CommentRequestDTO commentDto, Article article, User u) {

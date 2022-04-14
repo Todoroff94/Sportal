@@ -16,7 +16,7 @@ public class CommentEditDTO {
 
     private long id;
     private String content;
-    UserCommentAuthorDTO author;
+    private UserCommentAuthorDTO author;
 
 
 }

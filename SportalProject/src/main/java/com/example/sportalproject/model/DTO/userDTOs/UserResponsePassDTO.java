@@ -19,5 +19,5 @@ public class UserResponsePassDTO {
     private String username;
     private String firstName;
     private String lastName;
-    List<ArticleWithoutOwnerDTO> articles;
+    private List<ArticleWithoutOwnerDTO> articles;
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class UserRegisterResponseDTO {
+
     private long id;
     private String username;
     private String email;
